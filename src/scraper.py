@@ -2,10 +2,12 @@ import os
 import time
 import pandas as pd
 import logging
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+from typing import List, Dict, Optional
 from database import connect_to_mysql_database, create_cursor_object
 from dotenv import load_dotenv
 from utils import get_current_utc_datetime, extract_utc_date_and_time
@@ -155,7 +157,48 @@ def save_filtered_job_data_dataframe_to_mysql(df: pd.DataFrame) -> None:
     except Exception as e:
         logging.error(f"An error occurred: {e}")
 
+def save_job_data_to_csv(job_data: List) -> None:
+    try:
+        if job_data:
+            column_names = ["ID", "DATE", "TIME", "company_name", "job_title", "job_location"]
+            df = pd.DataFrame(job_data, columns=column_names)
+            
+            df["ID"] = range(1, len(df) + 1)
+            df["DATE"] = datetime.now().strftime("%Y-%m-%d")
+            df["TIME"] = datetime.now().strftime("%H:%M:%S")
+        
+            folder_name = "Job_Data"
+            os.makedirs(folder_name, exist_ok=True)
+            current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            csv_file_path = os.path.join(folder_name, f"{current_datetime}.csv")
 
+            df.to_csv(csv_file_path, index=False)
+            logging.info("Fetched job data saved in CSV file successfully")
+        else:
+            logging.info("No recent data found to save.")
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
 
+def save_unique_job_data_to_csv(job_filtered_data: List) -> None:
+    try:
+        if not job_filtered_data.empty:
+            column_names = ["ID", "DATE", "TIME", "company_name", "job_title", "job_location"]
+            df = pd.DataFrame(job_filtered_data, columns=column_names)
+            
+            df["ID"] = range(1, len(df) + 1)
+            df["DATE"] = datetime.now().strftime("%Y-%m-%d")
+            df["TIME"] = datetime.now().strftime("%H:%M:%S")
+        
+            folder_name = "Unique_Job_Data"
+            if not os.path.exists(folder_name):
+                os.makedirs(folder_name)
 
+            current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            csv_file_path = os.path.join(folder_name, f"{current_datetime}.csv")
 
+            df.to_csv(csv_file_path, index=False)
+            logging.info("Unique job data saved in CSV file successfully")
+        else:
+            logging.info("No unique data found to save.")
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
