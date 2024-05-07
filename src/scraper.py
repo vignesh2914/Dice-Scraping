@@ -159,24 +159,3 @@ def save_filtered_job_data_dataframe_to_mysql(df: pd.DataFrame) -> None:
 
 
 
-
-
-
-job_urls = make_url('python', 'canada', 1, 1)
-logging.info("Job URLs: %s", job_urls)  # Log the job URLs
-
-job_data = scrap_job_data(job_urls)
-logging.info("Job data: %s", job_data)  
-
-job_df = create_dataframe_of_job_data(job_data)
-print(job_df)
-
-unique_companies_df = get_unique_companies_df(job_df, "company_name")
-print(unique_companies_df)
-
-save_job_data_dataframe_to_mysql(job_df)
-
-save_filtered_job_data_dataframe_to_mysql(unique_companies_df)
-
-
-

@@ -1,18 +1,20 @@
-import os
-from scraper import generate_job_url, scrape_job_data
+from scraper import (
+                    make_url,
+                    scrap_job_data, 
+                    create_dataframe_of_job_data, 
+                    get_unique_companies_df, 
+                    save_job_data_dataframe_to_mysql, 
+                    save_filtered_job_data_dataframe_to_mysql
+)
 
-def main():
-    try:
-        job_url = generate_job_url(job_keyword='python', location_keyword='canada', filter_option=1)
+job_urls = make_url('Developer', 'canada', 1, 2)
 
-        job_data = scrape_job_data(job_url, max_pages=100, time_limit=120)
+job_data = scrap_job_data(job_urls)
 
-        print("Job URL:", job_url)
+job_df = create_dataframe_of_job_data(job_data)
 
-        print("Scraped Job Data:", job_data)
+unique_companies_df = get_unique_companies_df(job_df, "company_name")
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
+save_job_data_dataframe_to_mysql(job_df)
 
-if __name__ == "__main__":
-    main()
+save_filtered_job_data_dataframe_to_mysql(unique_companies_df)
