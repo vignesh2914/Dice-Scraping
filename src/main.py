@@ -9,7 +9,7 @@ from scraper import (
                     save_unique_job_data_to_csv
 )
 
-job_urls = make_url('Developer', 'canada', 1, 2)
+job_urls = make_url('python', 'canada', 1, 1)
 
 job_data = scrap_job_data(job_urls)
 
