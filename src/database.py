@@ -52,7 +52,8 @@ def create_tables(host, user, password, database):
                 TIME TIME,
                 COMPANY_NAME VARCHAR(255),
                 JOB_TITLE VARCHAR(255),
-                JOB_LOCATION VARCHAR(255)  
+                JOB_LOCATION VARCHAR(255),
+                COMPANY_LINK TEXT 
             )
             """,
             """
@@ -62,7 +63,8 @@ def create_tables(host, user, password, database):
                 TIME TIME,
                 COMPANY_NAME VARCHAR(255),
                 JOB_TITLE VARCHAR(255),
-                JOB_LOCATION VARCHAR(255) 
+                JOB_LOCATION VARCHAR(255), 
+                COMPANY_LINK TEXT
             )
             """,
         ]
