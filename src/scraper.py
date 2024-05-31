@@ -208,17 +208,6 @@ def save_unique_job_data_to_csv(job_filtered_data: pd.DataFrame) -> None:
     except Exception as e:
         logging.error(f"An error occurred: %e")
 
-job_urls = make_url('Developer', 'Canada', 1, 10)
-job_data = speedup(job_urls)  
-df = create_dataframe_of_job_data(job_data)
-
-save_job_data_to_csv(job_data)
-save_job_data_dataframe_to_mysql(df)
-    
-unique_df = get_unique_companies_df(df, 'company_name')
-save_unique_job_data_to_csv(unique_df)
-save_filtered_job_data_dataframe_to_mysql(unique_df)
-logging.error("No data available to save to CSV or MySQL.")
 
 
 
