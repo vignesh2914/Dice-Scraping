@@ -58,13 +58,13 @@ def scrape_single_page(url):
         page_source = driver.page_source
         soup = BeautifulSoup(page_source, 'html.parser')
 
-        jobs = soup.find_all('div', class_='d-flex justify-content-between title-container')
+        jobs = soup.find_all(class_='')
 
         job_data = []
 
         for job in jobs:
-            company_name = job.find('a', class_='ng-star-inserted').text.strip()
-            job_title_element = job.find('div', class_='overflow-hidden')
+            company_name = job.find(class_='').text.strip()
+            job_title_element = job.find(class_='overflow-hidden')
             job_title = job_title_element.text.strip() if job_title_element else "Job Title not found"
             
             location_name = job_title.split(company_name)[-1].strip()
@@ -74,10 +74,10 @@ def scrape_single_page(url):
             if job_title.endswith(company_name):
                 job_title = job_title[0:len(job_title) - len(company_name)].strip()
             
-            job_location_element = job.find('span', class_='search-result-location')
+            job_location_element = job.find(class_='')
             job_location = job_location_element.text.strip() if job_location_element else "Location not found"
             
-            company_link = job.find('a', class_='ng-star-inserted')['href'].strip()
+            company_link = job.find(class_='').strip()
             
             job_data.append({"company_name": company_name, "job_title": job_title, "job_location": job_location, "company_link": company_link})
 
