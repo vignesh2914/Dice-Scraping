@@ -26,10 +26,10 @@ database = os.getenv("database_name")
 def make_url(job_keyword: str, location_keyword: str, filter_option: int, num_of_pages: int):
     try:
         base_url = {
-            1: 'https://www.dice.com/jobs?q={}&location={}&page={}&pageSize=20&language=en&eid=0904',
-            2: 'https://www.dice.com/jobs?q={}&location={}&page={}&pageSize=20&filters.postedDate=SEVEN&language=en&eid=0904',
-            3: 'https://www.dice.com/jobs?q={}&location={}&page={}&pageSize=20&filters.postedDate=THREE&language=en&eid=0904',
-            4: 'https://www.dice.com/jobs?q={}&location={}&page={}&pageSize=20&filters.postedDate=ONE&language=en&eid=0904'
+            1: 'Your url location ={} role = {} analyse it',
+            2: 'Your url location ={} role = {} analyse it',
+            3: 'Your url location ={} role = {} analyse it',
+            4: 'Your url location ={} role = {} analyse it'
         }
         
         if 1 <= filter_option <= 4:
